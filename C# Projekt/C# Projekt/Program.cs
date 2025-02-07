@@ -8,12 +8,12 @@ namespace C__Projekt
         {
             if (Eleje())
             {
-                ConsoleKey v = ConsoleKey.A;
-                while (v != ConsoleKey.NumPad0 || v != ConsoleKey.D0)
+                int v = -1;
+                while (v != 0)
                 {
                     v = Menu();
                 }
-            }
+            } 
 
         }
 
@@ -21,7 +21,7 @@ namespace C__Projekt
         {
             Console.WriteLine("Nem ember ege\n Ebben a játékban bolygók közt utazhatsz és szerezhetsz anyagmintát, kb ennyi.");
             Console.WriteLine("\nSzeretnél elindulni? (I/N)");
-            ConsoleKey v = Console.ReadKey().Key;
+            ConsoleKey v = Console.ReadKey(true).Key;
             if (v == ConsoleKey.I)
             {
                 return true;
@@ -32,15 +32,16 @@ namespace C__Projekt
             }
         }
 
-        static ConsoleKey Menu()
+        static int Menu()
         {
             Console.Clear();
             Console.WriteLine("1... Felszállás");
             Console.WriteLine("2... Felöltözés");
             Console.WriteLine("3... Üzemanyagszint ellenőrzés");
             Console.WriteLine("\n0... Mégse");
-            ConsoleKey v = Console.ReadKey().Key;
-            return v;
+            char v = Console.ReadKey(true).KeyChar;
+            
+            return v - '0';
         }
     }
 }
