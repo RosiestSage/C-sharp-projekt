@@ -10,5 +10,10 @@ namespace C__Projekt
     {
         public string Nev {  get; set; }
         public int Tavolsag { get; set; }
+        public Bolygo(int tavolsag, string nev) 
+        {
+            Tavolsag = tavolsag;
+            Nev = nev;
+        } 
     }
 }

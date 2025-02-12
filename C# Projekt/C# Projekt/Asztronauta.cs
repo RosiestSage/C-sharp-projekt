@@ -8,7 +8,16 @@ namespace C__Projekt
 {
     public class Asztronauta
     {
-        public int OxigenSzint {  get; set; }
+        public int OxigenSzint { get; set; }
+        public bool Ruha { get; set; }
+
+        public Asztronauta()
+        {
+            Ruha = false;
+        }
+        
+
+        
         public void Anyaggyujtes()
         {
 
@@ -16,6 +25,12 @@ namespace C__Projekt
         public void Felszallas()
         {
 
+        }
+        public bool Feloltezes()
+        {
+            OxigenSzint = 100;
+            Ruha = true;
+            return true;
         }
     }
 }
