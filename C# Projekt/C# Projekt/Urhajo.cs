@@ -24,6 +24,7 @@ namespace C__Projekt
 
         public  Urhajo()
         {
+            Keszlet = 0;
             Bolygok = [
                 
                 new Bolygo(1.189, "Mars"),
@@ -35,7 +36,7 @@ namespace C__Projekt
                 new Bolygo(0, "Űr"),
                 new Bolygo(0, "Föld"),
                 ];
-            JelenlegiBolygo = Bolygok[7];
+            JelenlegiBolygo = Bolygok[6];
             }
 
 

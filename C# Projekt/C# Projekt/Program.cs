@@ -215,7 +215,7 @@ namespace C__Projekt
                 Console.WriteLine($"3... Vánusz({urhajo.Bolygok[2].Tavolsag * 1000000} km)");
                 Console.WriteLine($"4... Jewpiter({urhajo.Bolygok[3].Tavolsag * 1000000} km)");
                 Console.WriteLine($"5... XH-967({urhajo.Bolygok[4].Tavolsag * 1000000} km)\n");
-                Console.WriteLine($"6... XH-967({urhajo.Bolygok[6].Tavolsag * 1000000} km)\n");
+                Console.WriteLine($"6... Vissza a Földre({urhajo.Bolygok[6].Tavolsag * 1000000} km)\n");
                 char v = Console.ReadKey(true).KeyChar;
                 bolgyo = v - '0';
             
