@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C__Projekt
 {
-    public class Asztronauta
+    public class Asztronauta : Urhajo 
     {
         public int OxigenSzint { get; set; }
         public bool Ruha { get; set; }
@@ -17,15 +17,13 @@ namespace C__Projekt
         }
         
 
+
         
         public void Anyaggyujtes()
         {
 
         }
-        public void Felszallas()
-        {
 
-        }
         public bool Feloltezes()
         {
             OxigenSzint = 100;

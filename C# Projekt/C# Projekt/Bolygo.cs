@@ -9,8 +9,8 @@ namespace C__Projekt
     public class Bolygo
     {
         public string Nev {  get; set; }
-        public int Tavolsag { get; set; }
-        public Bolygo(int tavolsag, string nev) 
+        public double Tavolsag { get; set; }
+        public Bolygo(double tavolsag, string nev) 
         {
             Tavolsag = tavolsag;
             Nev = nev;

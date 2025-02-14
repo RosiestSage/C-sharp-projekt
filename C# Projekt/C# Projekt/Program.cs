@@ -8,9 +8,7 @@ namespace C__Projekt
             static Asztronauta urhajos = new Asztronauta();
         static void Main(string[] args)
         {
-            urhajo.JelenlegiBolygo = new Bolygo(0, "Föld");
             urhajo.Uzemanyagszint.Keszlet = 50;
-
             urhajos.Ruha = false;
 
 
@@ -36,9 +34,10 @@ namespace C__Projekt
                     switch (v)
                     { 
                         case 1:
-                            if (urhajos.Feloltezes() == true && urhajo.Uzemanyagszint.Mennyiseg > 50)
+                            if (urhajos.Ruha == true && urhajo.Uzemanyagszint.Mennyiseg >= 50)
                             {
-
+                                Felszallas();
+                                UrMenu();
                             }
                             else if (urhajo.Uzemanyagszint.Mennyiseg < 50)
                             {
@@ -84,9 +83,31 @@ namespace C__Projekt
             }
         }
 
+        static void Statisztika()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write($"Oxigénszint: {urhajos.OxigenSzint}");
+            Console.SetCursorPosition(30, 0);
+            Console.Write($"Üzemanyagszint: {urhajo.Uzemanyagszint.Mennyiseg}\n");
+            Console.SetCursorPosition(0, 1);
+            Console.Write($"Jelenlegi tartózkodás: {urhajo.JelenlegiBolygo.Nev}");
+            Console.SetCursorPosition(30, 1);
+            Console.Write($"Üzemanyag készlet: {urhajo.Uzemanyagszint.Keszlet}\n");
+            Console.WriteLine("------------------------------------------------------");
+            for (int i = 0; i < 2; i++)
+            {
+                Console.SetCursorPosition(53, i);
+                Console.Write("|");
+            }
+            Console.SetCursorPosition(0, 3);
+            Console.WriteLine();
+        }
+
+
         static int Menu()
         {
             Console.Clear();
+            Statisztika();
             Console.WriteLine("1... Felszállás");
             Console.WriteLine("2... Felöltözés");
             Console.WriteLine("3... Üzemanyagszint ellenőrzés");
@@ -155,9 +176,69 @@ namespace C__Projekt
                 if (v == ConsoleKey.I)
                 {
                     urhajos.Feloltezes();
+                    Console.Clear();
+                    Console.WriteLine("Sikeres felöltözés");
+                    Console.ReadKey(true);
+
                 }
             }
         }
     
+        static void Felszallas()
+        {
+            Console.Clear();
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write("-");
+                System.Threading.Thread.Sleep(1000);
+            }
+            Console.Clear();
+            Console.WriteLine("Sikeres felszállás!");
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine("Kinn vagy az űrben");
+            System.Threading.Thread.Sleep(1000);
+        }
+
+        static Bolygo UrMenu()
+        {
+            urhajo.Bolygok[6].Tavolsag = 1.05;
+            urhajo.JelenlegiBolygo = urhajo.Bolygok[6];
+            List<int> elfogadhato = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+            int bolgyo = -1;
+            while (!elfogadhato.Contains(bolgyo))
+            {
+                Console.Clear();
+                Statisztika();
+                Console.WriteLine("Hova tova?");
+                Console.WriteLine($"1... Mars({urhajo.Bolygok[0].Tavolsag * 1000000} km)");
+                Console.WriteLine($"2... QS-138({urhajo.Bolygok[1].Tavolsag * 1000000} km)");
+                Console.WriteLine($"3... Vánusz({urhajo.Bolygok[2].Tavolsag * 1000000} km)");
+                Console.WriteLine($"4... Jewpiter({urhajo.Bolygok[3].Tavolsag * 1000000} km)");
+                Console.WriteLine($"5... XH-967({urhajo.Bolygok[4].Tavolsag * 1000000} km)\n");
+                Console.WriteLine($"6... XH-967({urhajo.Bolygok[6].Tavolsag * 1000000} km)\n");
+                char v = Console.ReadKey(true).KeyChar;
+                bolgyo = v - '0';
+            
+            }
+
+
+            switch (bolgyo)
+            {
+                case 1:
+                    return urhajo.Bolygok[0];
+                case 2:
+                    return urhajo.Bolygok[1];
+                case 3:
+                    return urhajo.Bolygok[2];
+                case 4:
+                    return urhajo.Bolygok[3];
+                case 5:
+                    return urhajo.Bolygok[4];
+                case 6:
+                    return urhajo.Bolygok[6];
+            }
+            return urhajo.Bolygok[5];
+        }
+
     }
 }

@@ -19,7 +19,25 @@ namespace C__Projekt
             }
         }
         public Bolygo JelenlegiBolygo { get; set; }
-        public List<Bolygo> Celpontok {  get; set; }
+        public List<Bolygo> Bolygok {  get; set; }
+
+
+        public  Urhajo()
+        {
+            Bolygok = [
+                
+                new Bolygo(1.189, "Mars"),
+                new Bolygo(7.987, "QS-138"),
+                new Bolygo(3.552, "Vánusz"),
+                new Bolygo(5.324, "Jewpiter"),
+                new Bolygo(8.167, "XH-967"),
+
+                new Bolygo(0, "Űr"),
+                new Bolygo(0, "Föld"),
+                ];
+            JelenlegiBolygo = Bolygok[7];
+            }
+
 
 
         public bool Elindule()
