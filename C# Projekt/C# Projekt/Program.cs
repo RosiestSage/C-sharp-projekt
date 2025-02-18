@@ -4,6 +4,12 @@ namespace C__Projekt
 {
     internal class Program
     {
+        //TODO:
+        // Anyagminta gyűjtés -> készlet növelése
+        // Csekkolni hogy el tud-e menni odaáig (utazás, urhajó metódus) ==> ha nincs feltöltés és hibaüzenet
+        // Statisztika check
+        // Üzemanyag kivonása, hozzáadása
+
             static Urhajo urhajo = new Urhajo();
             static Asztronauta urhajos = new Asztronauta();
         static void Main(string[] args)
@@ -37,7 +43,21 @@ namespace C__Projekt
                             if (urhajos.Ruha == true && urhajo.Uzemanyagszint.Mennyiseg >= 50)
                             {
                                 Felszallas();
-                                UrMenu();
+                                Bolygo hely = new Bolygo(0, "", 0, 0);
+                                while (hely.Nev != "Föld")
+                                {
+                                    hely = UrMenu();
+                                    if (hely.Nev != "Föld")
+                                        hely = MasikBolygo(hely);
+                                }
+                                if (hely.Nev == "Föld")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Véget ért a kaland");
+                                    Console.ReadLine();
+                                    v = 0;
+                                    break;
+                                }
                             }
                             else if (urhajo.Uzemanyagszint.Mennyiseg < 50)
                             {
@@ -182,21 +202,23 @@ namespace C__Projekt
 
                 }
             }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Már felöltöztél!");
+                System.Threading.Thread.Sleep(1500);
+
+            }
         }
     
         static void Felszallas()
         {
-            Console.Clear();
-            for (int i = 0; i < 5; i++)
-            {
-                Console.Write("-");
-                System.Threading.Thread.Sleep(1000);
-            }
-            Console.Clear();
+            FelszallasAnimacio();
             Console.WriteLine("Sikeres felszállás!");
             System.Threading.Thread.Sleep(1000);
             Console.WriteLine("Kinn vagy az űrben");
             System.Threading.Thread.Sleep(1000);
+            urhajo.Uzemanyagszint.Mennyiseg -= urhajo.Bolygok[5].SzuksegesUzemanyag;
         }
 
         static Bolygo UrMenu()
@@ -240,5 +262,46 @@ namespace C__Projekt
             return urhajo.Bolygok[5];
         }
 
+
+        static Bolygo MasikBolygo(Bolygo bolygo)
+        {
+            FelszallasAnimacio();
+            Statisztika();
+            Console.WriteLine($"Üdvözöllek a {bolygo.Nev} nevű bolygón!");
+            Console.WriteLine("1... Anyagminta vétel");
+            Console.WriteLine("2... Vissza az űrbe");
+            char v = Console.ReadKey(true).KeyChar;
+
+            int k = v - '0';
+            switch (k)
+            {
+                case 1:
+
+                    FelszallasAnimacio();
+                    Statisztika();
+                    Console.WriteLine("Sikeres anyagminta gyűjtés");
+                    System.Threading.Thread.Sleep(100);
+                    Console.WriteLine("Visszatérés az űrbe");
+                    System.Threading.Thread.Sleep(100);
+                    break;
+            }
+            FelszallasAnimacio();
+
+            return urhajo.Bolygok[5];
+
+
+        }
+
+        static void FelszallasAnimacio()
+        {
+            Console.Clear();
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write("-");
+                System.Threading.Thread.Sleep(1000);
+            }
+            Console.Clear();
+
+        }
     }
 }

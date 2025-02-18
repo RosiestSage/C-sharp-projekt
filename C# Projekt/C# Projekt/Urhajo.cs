@@ -27,14 +27,14 @@ namespace C__Projekt
             Keszlet = 0;
             Bolygok = [
                 
-                new Bolygo(1.189, "Mars"),
-                new Bolygo(7.987, "QS-138"),
-                new Bolygo(3.552, "Vánusz"),
-                new Bolygo(5.324, "Jewpiter"),
-                new Bolygo(8.167, "XH-967"),
+                new Bolygo(1.189, "Mars", 20, 30),
+                new Bolygo(7.987, "QS-138", 60, 40),
+                new Bolygo(3.552, "Vánusz", 40, 40),
+                new Bolygo(5.324, "Jewpiter", 50, 50),
+                new Bolygo(8.167, "XH-967", 70, 20),
 
-                new Bolygo(0, "Űr"),
-                new Bolygo(0, "Föld"),
+                new Bolygo(0, "Űr", 20, 0),
+                new Bolygo(0, "Föld", 30, 100),
                 ];
             JelenlegiBolygo = Bolygok[6];
             }
@@ -52,7 +52,7 @@ namespace C__Projekt
                 return true;
             }
         }
-
+    /*
         public void Felszallas()
         {
             Console.WriteLine("");
@@ -72,7 +72,7 @@ namespace C__Projekt
         {
             Console.WriteLine("");
         }
-
+    */
 
     }
 }

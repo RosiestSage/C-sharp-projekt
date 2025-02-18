@@ -10,10 +10,14 @@ namespace C__Projekt
     {
         public string Nev {  get; set; }
         public double Tavolsag { get; set; }
-        public Bolygo(double tavolsag, string nev) 
+        public int SzuksegesUzemanyag { get; set; }
+        public int UzemanyagABolygon { get; set; }
+        public Bolygo(double tavolsag, string nev, int szukseges, int uzemanyagabolygon) 
         {
             Tavolsag = tavolsag;
             Nev = nev;
+            SzuksegesUzemanyag = szukseges;
+            UzemanyagABolygon = uzemanyagabolygon;
         } 
     }
 }

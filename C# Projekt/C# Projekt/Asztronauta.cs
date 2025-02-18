@@ -16,8 +16,6 @@ namespace C__Projekt
             Ruha = false;
         }
         
-
-
         
         public void Anyaggyujtes()
         {
