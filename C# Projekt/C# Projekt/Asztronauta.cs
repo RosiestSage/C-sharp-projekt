@@ -17,9 +17,15 @@ namespace C__Projekt
         }
         
         
-        public void Anyaggyujtes()
+        public int Anyaggyujtes(Bolygo bolygo)
         {
 
+            Keszlet += bolygo.UzemanyagABolygon;
+            if (Keszlet > 100)
+            {
+                Keszlet -= Keszlet - 100;
+            }
+            return Keszlet;
         }
 
         public bool Feloltezes()

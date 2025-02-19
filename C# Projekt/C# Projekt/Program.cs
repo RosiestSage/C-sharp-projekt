@@ -4,14 +4,9 @@ namespace C__Projekt
 {
     internal class Program
     {
-        //TODO:
-        // Anyagminta gyűjtés -> készlet növelése
-        // Csekkolni hogy el tud-e menni odaáig (utazás, urhajó metódus) ==> ha nincs feltöltés és hibaüzenet
-        // Statisztika check
-        // Üzemanyag kivonása, hozzáadása
 
-            static Urhajo urhajo = new Urhajo();
-            static Asztronauta urhajos = new Asztronauta();
+        static Urhajo urhajo = new Urhajo();
+        static Asztronauta urhajos = new Asztronauta();
         static void Main(string[] args)
         {
             urhajo.Uzemanyagszint.Keszlet = 50;
@@ -47,13 +42,42 @@ namespace C__Projekt
                                 while (hely.Nev != "Föld")
                                 {
                                     hely = UrMenu();
-                                    if (hely.Nev != "Föld")
-                                        hely = MasikBolygo(hely);
+                                    try
+                                    {
+                                        urhajo.Utazas(hely);
+                                        if (hely.Nev != "Föld")
+                                            hely = MasikBolygo(hely);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e.Message);
+                                        if (urhajo.Uzemanyagszint.Keszlet > 0)
+                                        {
+                                            Uzemanyagfeltöltes();
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Statisztika();
+                                            Piros();
+
+                                            Console.WriteLine("Nem tudsz eljutni");
+                                            Eredetiszin();
+
+                                            System.Threading.Thread.Sleep(1000);
+
+                                        }
+                                    }
                                 }
                                 if (hely.Nev == "Föld")
                                 {
+
                                     Console.Clear();
-                                    Console.WriteLine("Véget ért a kaland");
+                                    Kek();
+                                    FelszallasAnimacio("Vissza utazás a Földre ");
+                                    Eredetiszin();
+
+                                    Console.WriteLine("Véget ért a kaland!");
                                     Console.ReadLine();
                                     v = 0;
                                     break;
@@ -62,15 +86,24 @@ namespace C__Projekt
                             else if (urhajo.Uzemanyagszint.Mennyiseg < 50)
                             {
                                 Console.Clear();
+                                Piros();
                                 Console.WriteLine("Alacsony üzemanyag szint!");
-                                Console.ReadKey(true);
+                                Eredetiszin();
+                                System.Threading.Thread.Sleep(1000);
+
 
                             }
                             else if(urhajos.Ruha == false)
                             {
+
                                 Console.Clear();
+                                Piros();
+
                                 Console.WriteLine("Nincs rajtad űrruha!");
-                                Console.ReadKey(true);
+                                Eredetiszin();
+
+                                System.Threading.Thread.Sleep(1000);
+
                             }
                             break;
                         case 2:
@@ -90,7 +123,12 @@ namespace C__Projekt
         static bool Eleje()
         {
             Console.Clear();
-            Console.WriteLine("Nem ember ege\n Ebben a játékban bolygók közt utazhatsz és szerezhetsz anyagmintát, kb ennyi.");
+            Kek();
+
+            Console.WriteLine("Nem ember ege");
+            Eredetiszin();
+
+            Console.WriteLine(" Ebben a játékban bolygók közt utazhatsz és szerezhetsz anyagmintát, viszont ha visszatérsz a földre akkor vége a játéknak, kb ennyi.");
             Console.WriteLine("\nSzeretnél elindulni? (I/N)");
             ConsoleKey v = Console.ReadKey(true).Key;
             if (v == ConsoleKey.I)
@@ -105,22 +143,26 @@ namespace C__Projekt
 
         static void Statisztika()
         {
+            Kek();
+
             Console.SetCursorPosition(0, 0);
             Console.Write($"Oxigénszint: {urhajos.OxigenSzint}");
-            Console.SetCursorPosition(30, 0);
+            Console.SetCursorPosition(40, 0);
             Console.Write($"Üzemanyagszint: {urhajo.Uzemanyagszint.Mennyiseg}\n");
             Console.SetCursorPosition(0, 1);
             Console.Write($"Jelenlegi tartózkodás: {urhajo.JelenlegiBolygo.Nev}");
-            Console.SetCursorPosition(30, 1);
+            Console.SetCursorPosition(40, 1);
             Console.Write($"Üzemanyag készlet: {urhajo.Uzemanyagszint.Keszlet}\n");
-            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine("----------------------------------------------------------------");
             for (int i = 0; i < 2; i++)
             {
-                Console.SetCursorPosition(53, i);
+                Console.SetCursorPosition(63, i);
                 Console.Write("|");
             }
             Console.SetCursorPosition(0, 3);
             Console.WriteLine();
+            Eredetiszin();
+
         }
 
 
@@ -139,51 +181,103 @@ namespace C__Projekt
 
         static void Uzemanyagfeltöltes()
         {
-            if (urhajo.Elindule() == true)
+            if (urhajo.JelenlegiBolygo.SzuksegesUzemanyag > urhajo.Uzemanyagszint.Mennyiseg && urhajo.Uzemanyagszint.Keszlet == 0)
             {
                 Console.Clear();
-                Console.WriteLine("Van elég üzemanyag, elindulhat (ENTER)");
-                Console.ReadKey(true);
+                Piros();
+                Console.WriteLine("Nincs elég üzemanyag");
+                System.Threading.Thread.Sleep(1000);
+                Eredetiszin();
+
+
+            }
+            if (urhajo.Elindule() == true)
+            {
+                Zold();
+
+                Console.Clear();
+                Console.WriteLine("Van elég üzemanyag, elindulhatsz");
+                System.Threading.Thread.Sleep(1000);
+                Eredetiszin();
+
+
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("KEVÉS ÜZEMANYAG\n"
-                    + $"Jelenlegi üzemanyag szint: {urhajo.Uzemanyagszint.Mennyiseg}\n"
-                    + $"Betöltésre kész üzemanyag: {urhajo.Uzemanyagszint.Keszlet}");
-                Console.Write("Mennyit szeretne bele tölteni? ");
-                int uzemanyag = -1;
-                while (urhajo.Uzemanyagszint.Joertek(uzemanyag) == false)
-                {
-                    try
-                    {
+                Tankolas();
+            }
+            if (urhajo.JelenlegiBolygo.SzuksegesUzemanyag > urhajo.Uzemanyagszint.Mennyiseg)
+            {
+                Tankolas();
+            }
 
-                        uzemanyag = int.Parse(Console.ReadLine()!);
-                    }
-                    catch
+            
+        }
+
+        static void Tankolas()
+        {
+            Console.Clear();
+            Piros();
+            Console.WriteLine("KEVÉS ÜZEMANYAG\n");
+            Eredetiszin();
+            Console.WriteLine($"Jelenlegi üzemanyag szint: {urhajo.Uzemanyagszint.Mennyiseg}\n"
+                + $"Betöltésre kész üzemanyag: {urhajo.Uzemanyagszint.Keszlet}");
+            Console.Write("Mennyit szeretne bele tölteni? ");
+            int uzemanyag = -1;
+            while (urhajo.Uzemanyagszint.Joertek(uzemanyag) == false)
+            {
+                
+                try
+                {
+                    uzemanyag = int.Parse(Console.ReadLine()!);
+                    if (uzemanyag > urhajo.Uzemanyagszint.Keszlet)
                     {
                         Console.Clear();
-                        Console.WriteLine("KEVÉS ÜZEMANYAG\n"
-                            + $"Jelenlegi üzemanyag szint: {urhajo.Uzemanyagszint.Mennyiseg}\n"
+                        Console.WriteLine("Nincs ennyi üzemanyagod");
+                        System.Threading.Thread.Sleep(1000);
+                        Console.Clear();
+                        Piros();
+                        Console.WriteLine("KEVÉS ÜZEMANYAG\n");
+                        Eredetiszin();
+                        Console.WriteLine($"Jelenlegi üzemanyag szint: {urhajo.Uzemanyagszint.Mennyiseg}\n"
                             + $"Betöltésre kész üzemanyag: {urhajo.Uzemanyagszint.Keszlet}");
                         Console.Write("Mennyit szeretne bele tölteni? ");
                     }
                 }
-                try
+                catch
                 {
-                    urhajo.Uzemanyagszint.Tankolas(uzemanyag);
+                    Console.Clear();
+                    Piros();
+                    Console.WriteLine("KEVÉS ÜZEMANYAG\n");
+                    Eredetiszin();
+                    Console.WriteLine($"Jelenlegi üzemanyag szint: {urhajo.Uzemanyagszint.Mennyiseg}\n"
+                        + $"Betöltésre kész üzemanyag: {urhajo.Uzemanyagszint.Keszlet}");
+                    Console.Write("Mennyit szeretne bele tölteni? ");
                 }
-                catch (Exception ex)
-                { 
-                    Console.WriteLine(ex.Message);
-                }
-                Console.Clear();
-
-                Console.WriteLine("Sikeres feltöltés");
-                Console.ReadKey(true);
             }
 
-            
+
+            try
+            {
+                Kek();
+                Console.Clear();
+                Console.Write("Töltöttségi szint: ");
+                urhajo.Uzemanyagszint.Tankolas(uzemanyag);
+                Console.SetCursorPosition(0, 0);
+                Eredetiszin();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                System.Threading.Thread.Sleep(1000);
+
+            }
+            Console.Clear();
+            Zold();
+            Console.WriteLine("Sikeres feltöltés");
+            System.Threading.Thread.Sleep(1000);
+            Eredetiszin();
         }
 
         static void Feloltozes()
@@ -197,15 +291,23 @@ namespace C__Projekt
                 {
                     urhajos.Feloltezes();
                     Console.Clear();
+                    Zold();
+
                     Console.WriteLine("Sikeres felöltözés");
-                    Console.ReadKey(true);
+                    Eredetiszin();
+
+                    System.Threading.Thread.Sleep(1000);
 
                 }
             }
             else
             {
                 Console.Clear();
+                Piros();
+
                 Console.WriteLine("Már felöltöztél!");
+                Eredetiszin();
+
                 System.Threading.Thread.Sleep(1500);
 
             }
@@ -213,18 +315,27 @@ namespace C__Projekt
     
         static void Felszallas()
         {
-            FelszallasAnimacio();
+            Kek();
+
+            FelszallasAnimacio("Felszállás az űrbe ");
+            Eredetiszin();
+
+            Zold();
             Console.WriteLine("Sikeres felszállás!");
             System.Threading.Thread.Sleep(1000);
             Console.WriteLine("Kinn vagy az űrben");
             System.Threading.Thread.Sleep(1000);
+            Eredetiszin();
+
             urhajo.Uzemanyagszint.Mennyiseg -= urhajo.Bolygok[5].SzuksegesUzemanyag;
+            urhajo.JelenlegiBolygo = urhajo.Bolygok[5];
+
         }
 
         static Bolygo UrMenu()
         {
             urhajo.Bolygok[6].Tavolsag = 1.05;
-            urhajo.JelenlegiBolygo = urhajo.Bolygok[6];
+            urhajo.JelenlegiBolygo = urhajo.Bolygok[5];
             List<int> elfogadhato = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
             int bolgyo = -1;
             while (!elfogadhato.Contains(bolgyo))
@@ -265,10 +376,13 @@ namespace C__Projekt
 
         static Bolygo MasikBolygo(Bolygo bolygo)
         {
-            FelszallasAnimacio();
+            Kek();
+            FelszallasAnimacio("Utazás ");
+            Eredetiszin();
+            urhajo.JelenlegiBolygo = bolygo;
             Statisztika();
             Console.WriteLine($"Üdvözöllek a {bolygo.Nev} nevű bolygón!");
-            Console.WriteLine("1... Anyagminta vétel");
+            Console.WriteLine("1... Anyag kutatás");
             Console.WriteLine("2... Vissza az űrbe");
             char v = Console.ReadKey(true).KeyChar;
 
@@ -276,25 +390,47 @@ namespace C__Projekt
             switch (k)
             {
                 case 1:
-
-                    FelszallasAnimacio();
+                    Kek();
+                    FelszallasAnimacio("Anyag kutatás ");
+                    Eredetiszin();
+                    urhajo.Uzemanyagszint.Keszlet = urhajos.Anyaggyujtes(bolygo);
                     Statisztika();
-                    Console.WriteLine("Sikeres anyagminta gyűjtés");
-                    System.Threading.Thread.Sleep(100);
+
+                    Zold();
+                    Console.WriteLine("Sikeres anyag kutatás");
+                    Eredetiszin();
+                    Console.WriteLine($"\nGazdagabb lettél {urhajo.JelenlegiBolygo.UzemanyagABolygon} üzemanyaggal");
+                    System.Threading.Thread.Sleep(3000);
+
+
+                    Kek();
                     Console.WriteLine("Visszatérés az űrbe");
-                    System.Threading.Thread.Sleep(100);
+                    Eredetiszin();
+
+                    System.Threading.Thread.Sleep(1000);
                     break;
             }
-            FelszallasAnimacio();
+            try
+            {
+                urhajo.Utazas(urhajo.Bolygok[5]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Uzemanyagfeltöltes();
+            }
+
+            Felszallas();
 
             return urhajo.Bolygok[5];
 
 
         }
 
-        static void FelszallasAnimacio()
+        static void FelszallasAnimacio(string tevekenyseg)
         {
             Console.Clear();
+            Console.Write(tevekenyseg);
             for (int i = 0; i < 5; i++)
             {
                 Console.Write("-");
@@ -302,6 +438,26 @@ namespace C__Projekt
             }
             Console.Clear();
 
+        }
+
+        static void Kek()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+        }
+
+        static void Piros()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+        }
+
+        static void Zold()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        static void Eredetiszin()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

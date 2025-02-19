@@ -47,22 +47,27 @@ namespace C__Projekt
             {
                 return false;
             }
+
             else
             {
                 return true;
             }
         }
-    /*
-        public void Felszallas()
-        {
-            Console.WriteLine("");
-        }
 
-        public void Utazas()
-        {
-            Console.WriteLine("");
-        }
 
+        public void Utazas(Bolygo hely)
+        {
+            if (hely.SzuksegesUzemanyag > Uzemanyagszint.Mennyiseg)
+            {
+               
+                throw new Exception("Kevés üzemanyag");
+            }
+            else
+            {
+                Uzemanyagszint.Mennyiseg-= hely.SzuksegesUzemanyag;
+            }
+        }
+ /*
         public void PalyaraAllas()
         {
             Console.WriteLine("");

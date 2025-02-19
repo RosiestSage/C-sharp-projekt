@@ -14,12 +14,15 @@ namespace C__Projekt
         public int Keszlet { get; set; }
         public void Tankolas(int tankolas)
         {
-            Console.Clear();
+            if (tankolas > Keszlet)
+            {
+                throw new Exception("Nincs ennyi készleten! ");
+            }
             for (int i = 0; i < tankolas; i++)
             {
                 if (Mennyiseg < 100)
                 {
-                    Console.Clear() ;
+                    Console.SetCursorPosition(20, 0);
                     Mennyiseg++;
                     Console.Write($"{Mennyiseg}% ");
                     System.Threading.Thread.Sleep(100);
@@ -33,14 +36,14 @@ namespace C__Projekt
         {
             if (tankolas > Keszlet || tankolas < 0)
             {
-                
                 return false;
-                throw new Exception("Hibás érték!");
+
             }
             else
             {
                 return true;
             }
+            
         }
 
 
